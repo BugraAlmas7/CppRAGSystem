@@ -1,5 +1,4 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
-#include <nlohmann/json.hpp>
 #include <cpr/cpr.h>
 #include <iostream>
 #include <string>
@@ -18,10 +17,6 @@
 #define SQLITE_TRANSIENT
 
 using namespace std;
-
-using json = nlohmann::json;
-
-std::unordered_map<std::string, std::string> gunluk_burc_cache;
 
 std::mutex cache_mutex;
 
@@ -148,12 +143,6 @@ std::string get_api_key() {
     exit(1);
 }
 
-td::string guess_mime_type(const std::string& filename) {
-    if (filename.find(".png") != std::string::npos) return "image/png";
-    if (filename.find(".ogg") != std::string::npos) return "audio/ogg";
-    if (filename.find(".mp3") != std::string::npos) return "audio/mpeg";
-    return "image/jpeg";
-}
 
 std::string ask_gemini(const std::string& chat_id, const std::string& prompt, const std::string& file_body = "", const std::string& mime_type = "") {
     std::string api_key = get_api_key();
